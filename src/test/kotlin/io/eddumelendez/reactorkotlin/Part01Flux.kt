@@ -2,7 +2,10 @@ package io.eddumelendez.reactorkotlin
 
 import org.junit.Test
 import reactor.core.publisher.Flux
+import reactor.kotlin.core.publisher.toFlux
 import reactor.kotlin.test.test
+import java.time.Duration
+import kotlin.time.milliseconds
 
 class Part01Flux {
 
@@ -16,7 +19,7 @@ class Part01Flux {
 
     // TODO Return an empty Flux
     fun emptyFlux(): Flux<String> {
-        return null!!
+        return Flux.empty()
     }
 
     @Test
@@ -30,7 +33,7 @@ class Part01Flux {
 
     // TODO Return a Flux that contains 2 values "foo" and "bar" without using an array or a collection
     fun fooBarFluxFromValue(): Flux<String> {
-        return null!!
+        return Flux.just("foo", "bar")
     }
 
     @Test
@@ -44,7 +47,7 @@ class Part01Flux {
 
     // TODO Create a Flux from a List that contains 2 values "foo" and "bar"
     fun fooBarFluxFromList(): Flux<String> {
-        return null!!
+        return listOf<String>("foo", "bar").toFlux()
     }
 
     @Test
@@ -57,7 +60,7 @@ class Part01Flux {
 
     // TODO Create a Flux that emits an IllegalStateException
     fun errorFlux(): Flux<String> {
-        return null!!
+        return IllegalStateException("jo").toFlux()
     }
 
     @Test
@@ -71,7 +74,9 @@ class Part01Flux {
 
     // TODO Create a Flux that emits increasing values from 0 to 9 each 100ms
     fun counter(): Flux<Long> {
-        return null!!
+        return Flux.range(0, 10).map {
+            it.toLong()
+        }.delayElements(Duration.ofMillis(100))
     }
 
 }
